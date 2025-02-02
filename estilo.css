@@ -1,0 +1,95 @@
+body{
+    background-image: url(paisaje-minecraft-atardecer-en-la-selva_8192x4560_xtrafondos.com.jpg);
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Arial', sans-serif;
+    font-size: 16px; 
+    line-height: 1.6; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+    box-sizing: border-box; 
+}
+.contenedor {
+  width: 100%; 
+  max-width: 1200px; 
+  padding: 20px; 
+  margin: 0 auto; 
+   text-align: center;
+}
+.glass{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.conteinor {
+    width: 500px;
+    height: 300px;
+    margin: 200px auto;
+    text-align: center;
+}
+.gless{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+a {
+    text-decoration: none;
+    color: #1d3557; /* Color principal del enlace */
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    margin: 0.5rem 0;
+    transition: color 0.3s ease; /* Transición suave del color */
+  }
+  
+  a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -5px;
+    left: 0;
+    background-color: #457b9d; /* Color del subrayado */
+    transition: width 0.3s ease; /* Transición del subrayado */
+  }
+  
+  a:hover {
+    color: #e63946; /* Color al pasar el cursor */
+  }
+  
+  a:hover::after {
+    width: 100%; /* Ancho completo del subrayado en hover */
+  }
+  div a {
+    text-decoration: none;
+    color: #97350b;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0.5rem; /* Espaciado entre los enlaces */
+    transition: color 0.3s ease;
+  }
+  
+  div a:hover {
+    color: #e63946;
+  }
+  h1 {
+    font-family: 'Arial', sans-serif; /* Fuente moderna */
+    font-size: 1.5rem; /* Tamaño reducido */
+    color: #f20f0f; /* Color principal */
+    text-align: center; /* Centrado */
+    text-transform: uppercase; /* Convertir a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras reducido */
+    margin: 10px 0; /* Espaciado superior e inferior reducido */
+    position: relative; /* Para efectos con ::after */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Sombra más sutil */
+  }
