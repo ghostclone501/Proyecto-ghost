@@ -10,7 +10,7 @@ body{
  height: 700px;
  margin: 200px auto;
  text-align: center;
- margin-top: 30%;
+ margin-top: 10%;
 }
 .glass{
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
