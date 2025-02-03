@@ -1,9 +1,13 @@
 body{
-    background-image: url(paisaje-minecraft-atardecer-en-la-selva_8192x4560_xtrafondos.com.jpg);
+    background-image: url(dame-una-imagen-de-una-bandera-roja-que-lleve-escr.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 .contenedor {
- width: 500px;
- height: 300px;
+ width: 700px;
+ height: 400px;
  margin: 200px auto;
  text-align: center;
 }
@@ -17,10 +21,11 @@ body{
 }
 
 .conteinor {
-  width: 500px;
- height: 300px;
+  width: 700px;
+ height: 500px;
  margin: 200px auto;
  text-align: center;
+ margin-top: 60%;
 }
 .gless{
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
@@ -33,7 +38,7 @@ body{
 a {
     text-decoration: none;
     color: #1d3557; /* Color principal del enlace */
-    font-size: 1.5rem;
+    font-size: 1000px;
     font-weight: bold;
     position: relative;
     display: inline-block;
@@ -53,7 +58,7 @@ a {
   }
   
   a:hover {
-    color: #e63946; /* Color al pasar el cursor */
+    color: #010000; /* Color al pasar el cursor */
   }
   
   a:hover::after {
@@ -61,8 +66,8 @@ a {
   }
   div a {
     text-decoration: none;
-    color: #97350b;
-    font-size: 1.5rem;
+    color: #1d100a;
+    font-size: 3rem;
     font-weight: bold;
     display: inline-block;
     margin: 0.5rem; /* Espaciado entre los enlaces */
@@ -74,8 +79,8 @@ a {
   }
   h1 {
     font-family: 'Arial', sans-serif; /* Fuente moderna */
-    font-size: 1.5rem; /* Tamaño reducido */
-    color: #f20f0f; /* Color principal */
+    font-size: 3rem; /* Tamaño reducido */
+    color: #000000; /* Color principal */
     text-align: center; /* Centrado */
     text-transform: uppercase; /* Convertir a mayúsculas */
     letter-spacing: 1px; /* Espaciado entre letras reducido */
