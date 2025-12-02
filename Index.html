@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Distribuciones e Inversiones Raquel — Sistema Web</title>
+  <style>
+    :root{
+      --accent:#1a73e8;
+      --muted:#6b7280;
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --success:#10b981;
+      --danger:#ef4444;
+      --glass: rgba(255,255,255,0.6);
+      font-synthesis: none;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#111;background:var(--bg)}
+    header{background:linear-gradient(90deg,var(--accent),#0f62c6);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:18px}
+    header h1{font-size:1.1rem;margin:0}
+    .container{display:flex;min-height:calc(100vh - 68px)}
+    nav.sidebar{width:260px;background:var(--card);padding:18px;border-right:1px solid #e6e9ee}
+    nav.sidebar .logo{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    nav.sidebar .logo .box{width:48px;height:48px;border-radius:8px;background:linear-gradient(180deg,#fff,#eee);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700}
+    nav.sidebar a{display:block;padding:10px;border-radius:8px;color:#0f1724;text-decoration:none;margin-bottom:6px}
+    nav.sidebar a.active{background:linear-gradient(90deg,rgba(26,115,232,0.12),rgba(15,98,198,0.08));color:var(--accent);font-weight:600}
+    main{flex:1;padding:22px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);margin-bottom:16px}
+    h2{margin:0 0 12px 0;color:var(--accent)}
+    .img-placeholder{width:100%;height:160px;border-radius:10px;background:linear-gradient(180deg,#f8fafc,#eef2ff);display:flex;align-items:center;justify-content:center;color:var(--muted);border:2px dashed #e2e8f0}
+
+    form .row{display:flex;gap:12px}
+    form .row > *{flex:1}
+    input,select,textarea{width:100%;padding:10px;border:1px solid #e6eef8;border-radius:8px;background:#fff}
+    button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid #e6eef8;color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid #f1f5f9}
+    .flex{display:flex;gap:12px;align-items:center}
+    .small{font-size:0.9rem;color:var(--muted)}
+    .right{text-align:right}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#f1f5f9;color:var(--muted);font-weight:600}
+
+    /* responsive */
+    @media (max-width:900px){nav.sidebar{display:none}header{justify-content:center} .container{flex-direction:column}} 
+  </style>
+</head>
+<body>
+  <header>
+    <div style="display:flex;flex-direction:column">
+      <strong>Distribuciones e Inversiones Raquel</strong>
+      <span class="small">Sistema de Información Web — Gestión de Inventario, Ventas y Logística</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <nav class="sidebar">
+      <div class="logo">
+        <div class="box">R</div>
+        <div>
+          <div style="font-weight:700">Distribuciones Raquel</div>
+          <div class="small">Panel Administrativo</div>
+        </div>
+      </div>
+      <a href="#dashboard" class="active" data-link>Tablero</a>
+      <a href="#inventario" data-link>Inventario</a>
+      <a href="#ventas" data-link>Ventas</a>
+      <a href="#clientes" data-link>Clientes</a>
+      <a href="#proveedores" data-link>Proveedores</a>
+      <a href="#logistica" data-link>Logística</a>
+      <a href="#reportes" data-link>Reportes</a>
+      <a href="#config" data-link>Configuración</a>
+    </nav>
+
+    <main>
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="card">
+        <h2>Tablero</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+          <div class="card" style="padding:12px">
+            <div class="small">Productos en inventario</div>
+            <div style="font-size:1.6rem;font-weight:700" id="stat-products">0</div>
+          </div>
+          <div class="card" style="padding:12px">
+            <div class="small">Ventas registradas</div>
+            <div style="font-size:1.6rem;font-weight:700" id="stat-sales">0</div>
+          </div>
+          <div class="card" style="padding:12px">
+            <div class="small">Clientes</div>
+            <div style="font-size:1.6rem;font-weight:700" id="stat-customers">0</div>
+          </div>
+          <div class="card" style="padding:12px">
+            <div class="small">Rutas activas</div>
+            <div style="font-size:1.6rem;font-weight:700" id="stat-routes">0</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVENTARIO -->
+      <section id="inventario" class="card">
+        <h2>Inventario</h2>
+        <div class="img-placeholder">Espacio para imagen de productos / banner</div>
+
+        <form id="form-product" style="margin-top:12px">
+          <div class="row">
+            <input type="text" id="p-name" placeholder="Nombre del producto (ej: Refresco Cola 600ml)" required />
+            <input type="text" id="p-code" placeholder="Código SKU" />
+          </div>
+          <div class="row" style="margin-top:8px">
+            <input type="number" id="p-stock" placeholder="Stock inicial" required min="0" />
+            <input type="number" id="p-price" placeholder="Precio de venta" required min="0" step="0.01" />
+          </div>
+          <div class="row" style="margin-top:8px">
+            <select id="p-category">
+              <option value="Refrescos">Refrescos</option>
+              <option value="Galletas">Galletas</option>
+              <option value="Cigarros">Cigarros</option>
+              <option value="Otros">Otros</option>
+            </select>
+            <input type="text" id="p-provider" placeholder="Proveedor" />
+          </div>
+          <div style="margin-top:8px" class="flex">
+            <button type="submit">Agregar / Actualizar Producto</button>
+            <button type="button" class="ghost" id="clear-products">Limpiar tabla</button>
+            <button type="button" class="ghost" id="export-products">Exportar CSV</button>
+          </div>
+        </form>
+
+        <div style="margin-top:14px;overflow:auto">
+          <table id="table-products">
+            <thead>
+              <tr><th>SKU</th><th>Nombre</th><th>Cat.</th><th>Stock</th><th>Precio</th><th class="right">Acciones</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VENTAS -->
+      <section id="ventas" class="card">
+        <h2>Ventas</h2>
+        <div class="img-placeholder">Espacio para imagen de ventas/pedidos</div>
+
+        <form id="form-sale" style="margin-top:12px">
+          <div class="row">
+            <select id="s-customer"></select>
+            <select id="s-product"></select>
+          </div>
+          <div class="row" style="margin-top:8px">
+            <input type="number" id="s-qty" placeholder="Cantidad" min="1" value="1" />
+            <input type="number" id="s-price" placeholder="Precio (por unidad)" min="0" step="0.01" />
+          </div>
+          <div style="margin-top:8px" class="flex">
+            <button type="submit">Registrar Venta</button>
+            <button type="button" class="ghost" id="clear-sales">Limpiar ventas</button>
+          </div>
+        </form>
+
+        <div style="margin-top:12px;overflow:auto">
+          <table id="table-sales">
+            <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cant.</th><th>Importe</th><th class="right">Acciones</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CLIENTES -->
+      <section id="clientes" class="card">
+        <h2>Clientes</h2>
+        <form id="form-customer">
+          <div class="row">
+            <input type="text" id="c-name" placeholder="Nombre cliente / negocio" required />
+            <input type="text" id="c-zone" placeholder="Zona / Dirección" />
+          </div>
+          <div style="margin-top:8px" class="flex">
+            <button type="submit">Agregar Cliente</button>
+            <button type="button" class="ghost" id="clear-customers">Limpiar clientes</button>
+          </div>
+        </form>
+
+        <div style="margin-top:12px;overflow:auto">
+          <table id="table-customers"><thead><tr><th>Nombre</th><th>Zona</th><th class="right">Acciones</th></tr></thead><tbody></tbody></table>
+        </div>
+      </section>
+
+      <!-- PROVEEDORES -->
+      <section id="proveedores" class="card">
+        <h2>Proveedores</h2>
+        <form id="form-provider">
+          <div class="row">
+            <input type="text" id="pr-name" placeholder="Nombre proveedor" required />
+            <input type="text" id="pr-contact" placeholder="Contacto / Teléfono" />
+          </div>
+          <div style="margin-top:8px" class="flex">
+            <button type="submit">Agregar Proveedor</button>
+            <button type="button" class="ghost" id="clear-providers">Limpiar proveedores</button>
+          </div>
+        </form>
+
+        <div style="margin-top:12px;overflow:auto">
+          <table id="table-providers"><thead><tr><th>Proveedor</th><th>Contacto</th><th class="right">Acciones</th></tr></thead><tbody></tbody></table>
+        </div>
+      </section>
+
+      <!-- LOGÍSTICA -->
+      <section id="logistica" class="card">
+        <h2>Logística</h2>
+        <form id="form-route">
+          <div class="row">
+            <input type="text" id="r-name" placeholder="Nombre de la ruta (ej: Ruta Centro)" required />
+            <input type="text" id="r-driver" placeholder="Conductor / Repartidor" />
+          </div>
+          <div class="row" style="margin-top:8px">
+            <input type="text" id="r-vehicle" placeholder="Vehículo" />
+            <input type="text" id="r-status" placeholder="Estado (Activa / Pendiente)" />
+          </div>
+          <div style="margin-top:8px" class="flex">
+            <button type="submit">Agregar Ruta</button>
+            <button type="button" class="ghost" id="clear-routes">Limpiar rutas</button>
+          </div>
+        </form>
+
+        <div style="margin-top:12px;overflow:auto">
+          <table id="table-routes"><thead><tr><th>Ruta</th><th>Conductor</th><th>Vehículo</th><th>Estado</th><th class="right">Acciones</th></tr></thead><tbody></tbody></table>
+        </div>
+      </section>
+
+      <!-- REPORTES -->
+      <section id="reportes" class="card">
+        <h2>Reportes</h2>
+        <div class="row" style="margin-top:12px">
+          <div class="card" style="flex:1">
+            <div class="small">Ventas totales</div>
+            <div id="report-total" style="font-size:1.4rem;font-weight:700">$0.00</div>
+          </div>
+          <div class="card" style="flex:1">
+            <div class="small">Producto más vendido</div>
+            <div id="report-top-product" style="font-size:1.1rem;font-weight:700">—</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button id="btn-generate-report" class="ghost">Generar reporte rápido</button>
+        </div>
+      </section>
+
+      <section id="config" class="card">
+        <h2>Configuración</h2>
+        <p class="small">Opciones rápidas: respaldos, exportar/importar datos y limpiar la base local.</p>
+        <div style="margin-top:10px" class="flex">
+          <button id="export-all" class="ghost">Exportar todo (JSON)</button>
+          <button id="import-all" class="ghost">Importar datos (pegar JSON)</button>
+          <button id="reset-all" class="ghost">Reiniciar sistema</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    /* ======= Utilidades de almacenamiento local ======= */
+    const DB = {
+      products: JSON.parse(localStorage.getItem('db_products')||'[]'),
+      customers: JSON.parse(localStorage.getItem('db_customers')||'[]'),
+      providers: JSON.parse(localStorage.getItem('db_providers')||'[]'),
+      sales: JSON.parse(localStorage.getItem('db_sales')||'[]'),
+      routes: JSON.parse(localStorage.getItem('db_routes')||'[]')
+    };
+
+    function saveDB(){
+      localStorage.setItem('db_products', JSON.stringify(DB.products));
+      localStorage.setItem('db_customers', JSON.stringify(DB.customers));
+      localStorage.setItem('db_providers', JSON.stringify(DB.providers));
+      localStorage.setItem('db_sales', JSON.stringify(DB.sales));
+      localStorage.setItem('db_routes', JSON.stringify(DB.routes));
+      refreshUI();
+    }
+
+    /* ======= Helpers ======= */
+    function $(sel){return document.querySelector(sel)}
+    function $all(sel){return Array.from(document.querySelectorAll(sel))}
+
+    /* ======= Render tablas / selects ======= */
+    function refreshProducts(){
+      const tbody = $('#table-products tbody'); tbody.innerHTML='';
+      DB.products.forEach(p=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${p.code||''}</td><td>${p.name}</td><td>${p.category}</td><td>${p.stock}</td><td>$${Number(p.price).toFixed(2)}</td><td class="right"><button data-sku="${p.code||p.name}" class="edit-product ghost">Editar</button> <button class="delete-product ghost" data-sku="${p.code||p.name}">Eliminar</button></td>`;
+        tbody.appendChild(tr);
+      });
+      // opciones en select de venta
+      const sprod = $('#s-product'); sprod.innerHTML='';
+      DB.products.forEach(p=>{const opt=document.createElement('option');opt.value=p.code||p.name;opt.textContent=`${p.name} — ${p.category} — $${Number(p.price).toFixed(2)}`;sprod.appendChild(opt)});
+    }
+
+    function refreshCustomers(){
+      const tbody = $('#table-customers tbody'); tbody.innerHTML='';
+      DB.customers.forEach((c,i)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c.name}</td><td>${c.zone||''}</td><td class="right"><button data-id="${i}" class="delete-customer ghost">Eliminar</button></td>`;
+        tbody.appendChild(tr);
+      });
+      const sc = $('#s-customer'); sc.innerHTML='';
+      DB.customers.forEach(c=>{const opt=document.createElement('option');opt.value=c.name;opt.textContent=c.name;sc.appendChild(opt)});
+    }
+
+    function refreshProviders(){
+      const tbody = $('#table-providers tbody'); tbody.innerHTML='';
+      DB.providers.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${p.name}</td><td>${p.contact||''}</td><td class="right"><button data-id="${i}" class="delete-provider ghost">Eliminar</button></td>`;tbody.appendChild(tr)});
+    }
+
+    function refreshSales(){
+      const tbody = $('#table-sales tbody'); tbody.innerHTML='';
+      DB.sales.forEach((s,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${new Date(s.date).toLocaleString()}</td><td>${s.customer}</td><td>${s.product}</td><td>${s.qty}</td><td>$${Number(s.total).toFixed(2)}</td><td class="right"><button data-id="${i}" class="delete-sale ghost">Eliminar</button></td>`;tbody.appendChild(tr)});
+    }
+
+    function refreshRoutes(){
+      const tbody = $('#table-routes tbody'); tbody.innerHTML='';
+      DB.routes.forEach((r,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.name}</td><td>${r.driver||''}</td><td>${r.vehicle||''}</td><td>${r.status||''}</td><td class="right"><button data-id="${i}" class="delete-route ghost">Eliminar</button></td>`;tbody.appendChild(tr)});
+    }
+
+    function refreshStats(){
+      $('#stat-products').textContent = DB.products.length;
+      $('#stat-sales').textContent = DB.sales.length;
+      $('#stat-customers').textContent = DB.customers.length;
+      $('#stat-routes').textContent = DB.routes.length;
+    }
+
+    function refreshReports(){
+      const total = DB.sales.reduce((s,x)=>s+Number(x.total),0);
+      $('#report-total').textContent = `$${total.toFixed(2)}`;
+      // top product
+      const counts = {};
+      DB.sales.forEach(s=>{counts[s.product]=(counts[s.product]||0)+Number(s.qty)});
+      const top = Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0]||'—';
+      $('#report-top-product').textContent = top;
+    }
+
+    function refreshUI(){
+      refreshProducts(); refreshCustomers(); refreshProviders(); refreshSales(); refreshRoutes(); refreshStats(); refreshReports();
+    }
+
+    /* ======= Formularios ======= */
+    // Productos
+    $('#form-product').addEventListener('submit', e=>{
+      e.preventDefault();
+      const name = $('#p-name').value.trim();
+      const code = $('#p-code').value.trim() || name;
+      const stock = Number($('#p-stock').value)||0;
+      const price = Number($('#p-price').value)||0;
+      const category = $('#p-category').value;
+      const provider = $('#p-provider').value;
+      // si existe, actualizar
+      const idx = DB.products.findIndex(p=> (p.code||p.name)===code );
+      if(idx>=0){DB.products[idx]={...DB.products[idx],name,code,stock,price,category,provider};}
+      else{DB.products.push({name,code,stock,price,category,provider});}
+      saveDB();
+      e.target.reset();
+    });
+
+    // Ventas
+    $('#form-sale').addEventListener('submit', e=>{
+      e.preventDefault();
+      const customer = $('#s-customer').value || 'Consumidor';
+      const productKey = $('#s-product').value;
+      const qty = Number($('#s-qty').value)||1;
+      const price = Number($('#s-price').value) || (DB.products.find(p=> (p.code||p.name)===productKey)?.price || 0);
+      const product = DB.products.find(p=> (p.code||p.name)===productKey)?.name || productKey;
+      const total = qty * price;
+      // disminuir stock
+      const prodIdx = DB.products.findIndex(p=> (p.code||p.name)===productKey );
+      if(prodIdx>=0){DB.products[prodIdx].stock = Math.max(0, Number(DB.products[prodIdx].stock) - qty);} 
+      DB.sales.push({date: new Date().toISOString(),customer,product,qty,total});
+      saveDB();
+      e.target.reset();
+    });
+
+    // Clientes
+    $('#form-customer').addEventListener('submit', e=>{e.preventDefault();const name=$('#c-name').value.trim();const zone=$('#c-zone').value.trim();if(name){DB.customers.push({name,zone});saveDB();e.target.reset();}});
+
+    // Proveedores
+    $('#form-provider').addEventListener('submit', e=>{e.preventDefault();const name=$('#pr-name').value.trim();const contact=$('#pr-contact').value.trim();if(name){DB.providers.push({name,contact});saveDB();e.target.reset();}});
+
+    // Rutas
+    $('#form-route').addEventListener('submit', e=>{e.preventDefault();const name=$('#r-name').value.trim();const driver=$('#r-driver').value.trim();const vehicle=$('#r-vehicle').value.trim();const status=$('#r-status').value.trim();if(name){DB.routes.push({name,driver,vehicle,status});saveDB();e.target.reset();}});
+
+    /* ======= Botones de limpieza / export ======= */
+    $('#clear-products').addEventListener('click',()=>{if(confirm('Limpiar productos?')){DB.products=[];saveDB();}});
+    $('#clear-sales').addEventListener('click',()=>{if(confirm('Limpiar ventas?')){DB.sales=[];saveDB();}});
+    $('#clear-customers').addEventListener('click',()=>{if(confirm('Limpiar clientes?')){DB.customers=[];saveDB();}});
+    $('#clear-providers').addEventListener('click',()=>{if(confirm('Limpiar proveedores?')){DB.providers=[];saveDB();}});
+    $('#clear-routes').addEventListener('click',()=>{if(confirm('Limpiar rutas?')){DB.routes=[];saveDB();}});
+
+    // export CSV simple de productos
+    $('#export-products').addEventListener('click',()=>{
+      const rows = ['SKU,Nombre,Categoria,Stock,Precio'];
+      DB.products.forEach(p=>rows.push([p.code||'',`"${p.name.replace(/"/g,'""')}`,'',p.stock,p.price].join(',')));
+      const blob = new Blob([rows.join('
+')],{type:'text/csv'});
+      const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='productos.csv'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // export/import all json
+    $('#export-all').addEventListener('click',()=>{
+      const data = JSON.stringify(DB,null,2); const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url;a.download='db_distribuciones_raquel.json'; a.click(); URL.revokeObjectURL(url);
+    });
+    $('#import-all').addEventListener('click',()=>{
+      const raw = prompt('Pega aquí el JSON exportado del sistema');
+      try{const obj=JSON.parse(raw); DB.products=obj.products||[];DB.customers=obj.customers||[];DB.providers=obj.providers||[];DB.sales=obj.sales||[];DB.routes=obj.routes||[]; saveDB(); alert('Importación completada');}
+      catch(e){alert('JSON inválido')}
+    });
+
+    $('#reset-all').addEventListener('click',()=>{if(confirm('Reiniciar todo y eliminar datos?')){localStorage.clear();location.reload();}});
+
+    /* ======= Eliminaciones por tabla (delegation) ======= */
+    document.addEventListener('click', e=>{
+      if(e.target.matches('.delete-product')){
+        const sku=e.target.dataset.sku; DB.products = DB.products.filter(p=> (p.code||p.name)!==sku); saveDB();
+      }
+      if(e.target.matches('.edit-product')){
+        const sku=e.target.dataset.sku; const p=DB.products.find(x=>(x.code||x.name)===sku); if(p){$('#p-name').value=p.name;$('#p-code').value=p.code||p.name;$('#p-stock').value=p.stock;$('#p-price').value=p.price;$('#p-category').value=p.category;$('#p-provider').value=p.provider; window.scrollTo({top:0,behavior:'smooth'});} }
+      if(e.target.matches('.delete-customer')){DB.customers.splice(Number(e.target.dataset.id),1); saveDB();}
+      if(e.target.matches('.delete-provider')){DB.providers.splice(Number(e.target.dataset.id),1); saveDB();}
+      if(e.target.matches('.delete-sale')){DB.sales.splice(Number(e.target.dataset.id),1); saveDB();}
+      if(e.target.matches('.delete-route')){DB.routes.splice(Number(e.target.dataset.id),1); saveDB();}
+    });
+
+    // generar reporte rápido
+    $('#btn-generate-report').addEventListener('click',()=>{refreshReports(); alert('Reporte rápido generado en la sección "Reportes"')});
+
+    // navegación simple
+    document.querySelectorAll('[data-link]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault(); document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.remove('active')); a.classList.add('active'); document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});}));
+
+    // iniciar
+    refreshUI();
+
+    // Pre-cargar algunos datos de ejemplo si no hay nada (solo la primera vez)
+    if(!localStorage.getItem('db_initialized')){
+      DB.products.push({name:'Refresco Cola 600ml',code:'R-COLA-600',category:'Refrescos',stock:120,price:0.85,provider:'Proveedor A'});
+      DB.products.push({name:'Galletas Dulces 250g',code:'G-DUL-250',category:'Galletas',stock:200,price:0.6,provider:'Proveedor B'});
+      DB.customers.push({name:'Tienda El Buen Sabor',zone:'Centro'});
+      DB.providers.push({name:'Proveedor A',contact:'9999-0000'});
+      DB.routes.push({name:'Ruta Centro',driver:'Carlos',vehicle:'Camión 12m',status:'Activa'});
+      localStorage.setItem('db_initialized','1'); saveDB();
+    }
+
+  </script>
+</body>
+</html>
